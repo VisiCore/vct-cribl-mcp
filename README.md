@@ -64,15 +64,98 @@ See [`docs/configuration.md`](./docs/configuration.md) for details on environmen
 
 ## Available Tools
 
-This server provides tools to interact with Cribl, including:
+This server exposes the following MCP tools, organized by category. Most group-scoped tools accept an optional `groupName` parameter — if omitted, the server auto-resolves to the default worker group.
 
-*   Listing Worker Groups/Fleets
-*   Getting/Setting Pipeline configurations
-*   Getting Source configurations
-*   Restarting Worker Groups
-*   Querying System Metrics (with filtering)
+### Infrastructure & System
 
-For a detailed list and usage instructions, see [`docs/usage.md`](./docs/usage.md).
+| Tool | Description |
+|------|-------------|
+| `cribl_listWorkerGroups` | Lists worker groups/fleets, filterable by product type (stream, edge, search, all) |
+| `cribl_getWorkerGroupStatus` | Returns operational status for worker groups (worker count, config version, etc.) |
+| `cribl_getWorkers` | Lists individual worker nodes with hostname, status, version, CPU, and memory usage |
+| `cribl_restartWorkerGroup` | Restarts all workers within the default worker group |
+| `cribl_getSystemInfo` | Retrieves system info including version, build, license, and uptime |
+| `cribl_getSystemMetrics` | Queries system metrics with optional filtering (filterExpr, metricNameFilter, time range, etc.) |
+| `cribl_getAppLog` | Fetches recent application log entries, with optional limit and filter |
+| `cribl_getUsers` | Lists user accounts including usernames, roles, and disabled status |
+| `cribl_getAlerts` | Fetches system alerts/messages with pagination and filtering support |
+| `cribl_getNotifications` | Fetches notification rule definitions (alert rules that trigger on conditions) |
+
+### Pipelines
+
+| Tool | Description |
+|------|-------------|
+| `cribl_getPipelines` | Lists pipeline definitions in a worker group |
+| `cribl_getPipelineConfig` | Retrieves the full configuration JSON for a specific pipeline |
+| `cribl_setPipelineConfig` | Applies a new configuration payload to a pipeline |
+| `cribl_createPipeline` | Creates a new pipeline with specified functions |
+| `cribl_deletePipeline` | Deletes a pipeline from a worker group |
+| `cribl_previewPipeline` | Sends sample events through a pipeline and returns transformed output for testing |
+
+### Routes
+
+| Tool | Description |
+|------|-------------|
+| `cribl_getRoutes` | Lists route configurations (source -> pipeline -> destination mappings) |
+| `cribl_createRoute` | Creates a new route with output, filter, pipeline, and enabled settings |
+| `cribl_toggleRoute` | Enables or disables an existing route |
+| `cribl_deleteRoute` | Deletes a route from a worker group |
+
+### Sources & Destinations
+
+| Tool | Description |
+|------|-------------|
+| `cribl_getSources` | Lists source (input) configurations in a worker group |
+| `cribl_createSource` | Creates a new source (e.g., syslog, http, splunk_tcp, kafka) |
+| `cribl_updateSource` | Updates fields on an existing source configuration |
+| `cribl_deleteSource` | Deletes a source from a worker group |
+| `cribl_getDestinations` | Lists destination (output) configurations in a worker group |
+| `cribl_createDestination` | Creates a new destination (e.g., s3, splunk, syslog, kafka) |
+| `cribl_updateDestination` | Updates fields on an existing destination configuration |
+| `cribl_deleteDestination` | Deletes a destination from a worker group |
+
+### Knowledge & Libraries
+
+| Tool | Description |
+|------|-------------|
+| `cribl_getLookups` | Lists lookup file definitions in a worker group |
+| `cribl_getLookupContent` | Fetches the actual data content (columns and rows) of a lookup file |
+| `cribl_uploadLookup` | Creates or updates a lookup file with provided fields and rows |
+| `cribl_getPacks` | Lists installed packs in a worker group |
+| `cribl_getSamples` | Lists sample data files in a worker group |
+| `cribl_getSampleData` | Fetches the actual event content of a sample data file |
+| `cribl_getEventBreakers` | Lists event breaker rulesets |
+| `cribl_getGlobalVariables` | Lists global variables defined in a worker group |
+| `cribl_getRegexLibrary` | Lists named regex patterns from the regex library |
+| `cribl_getParserLibrary` | Lists parser definitions for extracting structured fields from raw data |
+| `cribl_getSchemas` | Lists schema definitions for expected event structure |
+| `cribl_getDatasets` | Lists dataset providers in a worker group |
+
+### Jobs & Collectors
+
+| Tool | Description |
+|------|-------------|
+| `cribl_getJobs` | Lists jobs in a worker group |
+| `cribl_getCollectors` | Lists collector configurations (scheduled data collection) |
+| `cribl_runCollectorJob` | Triggers an on-demand run of a collector job |
+
+### Version Control & Deployment
+
+| Tool | Description |
+|------|-------------|
+| `cribl_versionControl` | Detects if git version control is enabled and shows remote repo, branch, and status |
+| `cribl_getGitDiff` | Shows uncommitted configuration changes (git diff) — use before committing |
+| `cribl_commitPipeline` | Commits staged config changes to version control with a message |
+| `cribl_deployPipeline` | Deploys a specific committed version to a worker group |
+
+### Search
+
+| Tool | Description |
+|------|-------------|
+| `cribl_runSearch` | Submits a search job to Cribl Search, returns a job ID for polling |
+| `cribl_getSearchResults` | Retrieves results for a previously submitted search job |
+
+For detailed parameter documentation and usage instructions, see [`docs/overview.md`](./docs/overview.md).
 
 ## Example Usage (Prompts)
 
