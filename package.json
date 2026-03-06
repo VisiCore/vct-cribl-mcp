@@ -11,7 +11,8 @@
     "build": "tsc && chmod +x dist/server.js",
     "start": "node dist/server.js",
     "dev": "node --loader ts-node/esm src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
   "devDependencies": {
     "@types/node": "^20.14.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^4.0.18"
   },
   "directories": {
     "doc": "docs"
